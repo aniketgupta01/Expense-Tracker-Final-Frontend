@@ -19,6 +19,7 @@ async function signUpFormSubmit(e){
     try{
         const user = await axios.post('http://localhost:6500/user/signup',obj);
         signupForm.reset();
+        console.log(user)
         if (user.status==200) {
             showMessage('User created successfully!', 'success');
         } else {
@@ -44,5 +45,5 @@ function showMessage(message, messageType) {
 
     setTimeout(function() {
         messageDiv.remove(); 
-    }, 2000);
+    }, 4000);
 }

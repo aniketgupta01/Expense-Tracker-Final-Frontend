@@ -1,0 +1,16 @@
+
+
+.btn{
+    float: right;
+
+}
+#expense-list{
+    margin: 50px;
+   
+    
+}
+li{
+     padding:15px;
+    background-color:beige;
+    border-radius: 10px;
+}

@@ -1,6 +1,7 @@
 const loginForm = document.querySelector('#login-form')
 const emailInput = document.querySelector('#email');
 const passwordInput = document.querySelector('#password');
+const messageContainer = document.querySelector('#messageContainer')
 
 loginForm.addEventListener('submit',loginFormSubmit);
 
@@ -13,34 +14,41 @@ async function loginFormSubmit(e){
     }
 
     try{
-        let result = axios.post("http://localhost:6500/user/login",obj);
+        let result = await axios.post("http://localhost:6500/user/login",obj);
         loginForm.reset();
 
-        if(result.data == 'success'){
-            showMessage('You are logged in!','success')
+        if(result.data.message == 'success'){
+             showMessage('You are logged in!','success')
+             .then(() => {
+                window.location.href = "../expense/index.html"
+             })
         }
-        else if(result.data == 'not found'){
+    }
+    catch(err){
+        if(err.response.status === 404){
             showMessage('User not found!','error')
         }
         else{
             showMessage('Incorrect Password','error')
         }
     }
-    catch(err){
-        console.log(err);
-    }
 }
 
 function showMessage(message, messageType) {
-    const messageDiv = document.createElement('div');
-    messageDiv.textContent = message;
+    return new Promise((resolve, reject) => {
+        const messageDiv = document.createElement('div');
+        messageDiv.textContent = message;
+    
+        messageDiv.className = `message ${messageType}`;
+    
+        messageContainer.innerHTML = ''; 
+        messageContainer.appendChild(messageDiv);
+    
+        setTimeout(function() {
+            messageDiv.remove(); 
+            resolve();
+        }, 500);
 
-    messageDiv.className = `message ${messageType}`;
-
-    messageContainer.innerHTML = ''; 
-    messageContainer.appendChild(messageDiv);
-
-    setTimeout(function() {
-        messageDiv.remove(); 
-    }, 2000);
+    })
+   
 }
