@@ -65,8 +65,8 @@ window.addEventListener('DOMContentLoaded',async() => {
 
 
 async function deleteExpense(id){
-    // const token = localStorage.getItem('token')
-    let result = await axios.get(`http://localhost:6500/expense/delete-expense/${id}`);
+    const token = localStorage.getItem('token')
+    let result = await axios.get(`http://localhost:6500/expense/delete-expense/${id}`,{headers : {"Authorization" : token}});
 
     removeExpense(id);
 
@@ -143,7 +143,7 @@ function showLeaderboard(){
             var leaderboard = document.getElementById('leaderboard');
             leaderboard.innerHTML += '<h1> Leaderboard </h1>';
             userLeaderboardArray.data.forEach((userDetails) => {
-                leaderboard.innerHTML += `<li> Name - ${userDetails.name} : Total Expense - ${userDetails.total_expense}`
+                leaderboard.innerHTML += `<li> Name - ${userDetails.name} : Total Expense - ${userDetails.totalExpense}`
             })
 
         }
