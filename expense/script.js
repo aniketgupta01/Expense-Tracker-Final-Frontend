@@ -5,6 +5,9 @@ const expenseForm = document.querySelector('#expense-form');
 const expenseContainer = document.querySelector('#expense-list')
 const rzp_button = document.getElementById('rzp-button');
 const divarea = document.getElementById('divarea');
+const premium = document.getElementById('premium')
+const userName = document.getElementById('user-name');
+
 
 expenseForm.addEventListener('submit',submitExpense);
 
@@ -50,14 +53,17 @@ function showExpense(obj){
 
 window.addEventListener('DOMContentLoaded',async() => {
     const token = localStorage.getItem('token')
-    const isPremium = localStorage.getItem('isPremium');
-    if(isPremium=='true'){
-        showPremium();
-    }
+    
     let expenses = await axios.get('http://localhost:6500/expense/get-expenses',{headers:{"Authorization":token}});
+    userName.innerHTML = expenses.data.userName;
+    if(expenses.data.isPremium){
+        showPremium();
+        downloadReport();
+        showReport();
+    }
 
-    for(let i=0;i<expenses.data.length;i++){
-        showExpense(expenses.data[i]);
+    for(let i=0;i<expenses.data.allExpenses.length;i++){
+        showExpense(expenses.data.allExpenses[i]);
     }
 
 })
@@ -97,8 +103,9 @@ document.getElementById('rzp-button').onclick = async function (e){
 
             },{headers : {"Authorization" : token}}
         )
-        localStorage.setItem('isPremium','true')
         showPremium();
+        showReport();
+        downloadReport();
         
 
         }
@@ -125,28 +132,92 @@ document.getElementById('rzp-button').onclick = async function (e){
 function showPremium(){
     const p = document.createElement('p');
         p.innerHTML="You are a premium user now."
-        divarea.removeChild(rzp_button);
-        divarea.appendChild(p);
-        showLeaderboard();
-}
-
-function showLeaderboard(){
-    const leaderboard_button = document.createElement('input');
+        rzp_button.remove();
+        premium.appendChild(p);
+        const leaderboard_button = document.createElement('input');
         leaderboard_button.type = 'button';
         leaderboard_button.value = 'Show Leaderboard';
-        leaderboard_button.onclick = async() => {
+        leaderboard_button.id = 'leaderboard-button';
+        leaderboard_button.classList = "button button-leaderboard"
+        leaderboard_button.onclick = () => {
+            showLeaderboard();
+        }
+        divarea.appendChild(leaderboard_button);
+}
+
+function downloadReport(){
+    const downloadButton = document.createElement('button');
+    downloadButton.innerHTML = "Download Report";
+    downloadButton.classList = "button button-download"
+    divarea.appendChild(downloadButton);
+}
+function showReport(){
+    const showReportButton = document.createElement('button');
+    showReportButton.innerHTML = "Show Expense Report"
+    showReportButton.classList = "button button-show"
+    divarea.appendChild(showReportButton)
+
+    showReportButton.addEventListener('click',() => {
+        window.location.href = "../expense-report/index.html"
+    })
+}
+
+// function showLeaderboard(){
+//     const leaderboard_button = document.createElement('input');
+//         leaderboard_button.type = 'button';
+//         leaderboard_button.value = 'Show Leaderboard';
+//         leaderboard_button.classList = "button button-leaderboard"
+//         leaderboard_button.onclick = async () => {
+//         //     leaderboard_button.value = 'Close'
+//         //     leaderboard_button.onclick = () => {
+//         //         closeLeaderboard();
+//         //     }
+//         //     const token = localStorage.getItem('token');
+//         //     const userLeaderboardArray = await axios.get('http://localhost:6500/premium/showLeaderboard',{headers:{
+//         //         'Authorization':token
+//         //     }})
+//         //     console.log(userLeaderboardArray);
+//         //     var leaderboard = document.getElementById('leaderboard');
+//         //     leaderboard.innerHTML += '<h1> Leaderboard </h1>';
+//         //     userLeaderboardArray.data.forEach((userDetails) => {
+//         //         leaderboard.innerHTML += `<li> Name - ${userDetails.name} : Total Expense - ${userDetails.totalExpense}`
+//         //     })
+
+//         // }
+
+//         divarea.appendChild(leaderboard_button);
+// }
+
+
+
+
+// }
+async function showLeaderboard(){
+    const leaderboardButton = document.getElementById('leaderboard-button');
             const token = localStorage.getItem('token');
             const userLeaderboardArray = await axios.get('http://localhost:6500/premium/showLeaderboard',{headers:{
                 'Authorization':token
             }})
-            console.log(userLeaderboardArray);
+            
             var leaderboard = document.getElementById('leaderboard');
             leaderboard.innerHTML += '<h1> Leaderboard </h1>';
             userLeaderboardArray.data.forEach((userDetails) => {
                 leaderboard.innerHTML += `<li> Name - ${userDetails.name} : Total Expense - ${userDetails.totalExpense}`
             })
+            leaderboardButton.value = 'Close'
+            leaderboardButton.onclick = () => {
+                closeLeaderboard();
+            }
 
         }
+        function closeLeaderboard(){
+            leaderboard.innerHTML=""
+            const leaderboardButton = document.getElementById('leaderboard-button');
+            leaderboardButton.value = "Show Leaderboard"
+            leaderboardButton.onclick = () => {
+                console.log('aaaaaaa')
+                showLeaderboard();
 
-        divarea.appendChild(leaderboard_button);
-}
+            }
+
+        }

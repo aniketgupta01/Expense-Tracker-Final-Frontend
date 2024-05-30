@@ -21,7 +21,6 @@ async function loginFormSubmit(e){
              showMessage('You are logged in!','success')
              .then(() => {
                 localStorage.setItem('token',result.data.token);
-                localStorage.setItem('isPremium',result.data.isPremium)
                 window.location.href = "../expense/index.html"
              })
         }

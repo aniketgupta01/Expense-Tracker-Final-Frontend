@@ -1,4 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap');
 
+*{
+    font-family: 'Montserrat', sans-serif;
+}
 
 .btn{
     float: right;
@@ -13,4 +17,117 @@ li{
      padding:15px;
     background-color:beige;
     border-radius: 10px;
+}
+#user-name{
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1em;
+    font-weight: 500;
+    color: #fff;
+    background: linear-gradient(45deg, #4A90E2, #9013FE);
+    padding: 8px 16px;
+    border-radius: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: inline-block;
+    text-align: center;
+    margin: 0;
+    
+    
+
+}
+
+.button {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1em;
+    font-weight: 600;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.3s;
+    text-align: center;
+    margin: 5px;
+    display: inline-block;
+}
+
+/* Download button styles */
+.button-download {
+    float: right;
+    background: linear-gradient(45deg, #28a745, #218838);
+    color: white;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+.button-download:hover {
+    background: linear-gradient(45deg, #218838, #28a745);
+    transform: scale(1.05);
+}
+
+.button-download:active {
+    background: linear-gradient(45deg, #1e7e34, #28a745);
+    transform: scale(1);
+}
+
+/* Show button styles */
+.button-show {
+    float: right;
+    background: linear-gradient(45deg, #007bff, #0056b3);
+    color: white;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+.button-show:hover {
+    background: linear-gradient(45deg, #0056b3, #007bff);
+    transform: scale(1.05);
+}
+
+.button-show:active {
+    background: linear-gradient(45deg, #004085, #007bff);
+    transform: scale(1);
+}
+.button-leaderboard {
+    background: linear-gradient(45deg, #ff8c00, #ff4500);
+    color: white;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+.button-leaderboard:hover {
+    background: linear-gradient(45deg, #ff4500, #ff8c00);
+    transform: scale(1.05);
+}
+
+.button-leaderboard:active {
+    background: linear-gradient(45deg, #e65100, #ff8c00);
+    transform: scale(1);
+}
+
+.app-heading {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 2.5em;
+    font-weight: 700;
+    color: white;
+    background-color: #1e90ff; /* Bluish background color */
+    text-align: center;
+    margin-top: 20px;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-bottom: 5px solid #00bfff; /* Slightly different blue for contrast */
+}
+
+.app-heading span {
+    display: inline-block;
+    animation: color-animation 5s ease infinite;
+}
+
+/* Keyframes for color animation */
+@keyframes color-animation {
+    0% {
+        color: #ffffff;
+    }
+    50% {
+        color: #e0f7ff;
+    }
+    100% {
+        color: #ffffff;
+    }
 }

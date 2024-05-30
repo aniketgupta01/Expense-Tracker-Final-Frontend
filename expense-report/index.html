@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Report</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+     <link rel="stylesheet" href="../expense/style.css">   
+
+
+</head>
+<body>
+    <div class="container card">
+        <h1 class="app-heading"><span>Expense Tracker App</span></h1>
+        <div class="date-info">
+            <h2 class="text-center mt-5" id="year-heading"></h2>
+            <h4 class="text-center text-secondary mt-5" id="month-heading"></h4>
+        </div>
+        <div class="month-table mt-4"">
+            <table class="table table-striped table-hover table-bordered">
+                <thead class="table-primary">
+                    <tr>
+                        <th>Date</th>
+                        <th>Description</th>
+                        <th>Category</th>
+                        <th>Income</th>
+                        <th>Expenses</th>
+                    </tr>
+                </thead>
+                <tbody id="monthtable">
+
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th colspan="5" class="text-end " id="month-totalexpense"></th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+
+        <div class="yeartable mt-4">
+            <h4 class="text-secondary text-center mt-2">Yearly Report</h4>
+            <table class="table table-striped table-hover table-bordered">
+                <thead class="table-primary">
+                    <tr>
+                        <th>Month</th>
+                        <th>Income</th>
+                        <th>Expense</th>
+                        <th>Savings</th>
+                    </tr>
+                </thead>
+                <tbody id="yeartable">
+
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th colspan="5" class="text-end " id="year-totalexpense"></th>
+                    </tr>
+
+                </tfoot>
+            </table>
+        </div>
+
+        <button class="button button-download" >Download Report</button>
+
+        </div>
+    
+    
+
+
+
+
+    <script src="./script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.0/axios.min.js"></script>
+</body>
+</html>
