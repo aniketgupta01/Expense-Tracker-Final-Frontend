@@ -41,7 +41,7 @@ function showExpense(obj){
     expenseDiv.id = expense_id;
     expenseDiv.className = "expense-container";
     expenseDiv.innerHTML = `<ul>
-    <li>${amount} - ${description} - ${category} <button class="btn btn-danger" onclick=deleteExpense(${expense_id})>Delete</button></li>
+    <li>₹${amount} - ${description} - ${category} <button class="btn btn-danger" onclick=deleteExpense(${expense_id})>Delete</button></li>
     
 </ul>`;
 
@@ -58,8 +58,9 @@ window.addEventListener('DOMContentLoaded',async() => {
     userName.innerHTML = expenses.data.userName;
     if(expenses.data.isPremium){
         showPremium();
-        downloadReport();
+        // downloadReport();
         showReport();
+        previousDownloads();
     }
 
     for(let i=0;i<expenses.data.allExpenses.length;i++){
@@ -105,7 +106,8 @@ document.getElementById('rzp-button').onclick = async function (e){
         )
         showPremium();
         showReport();
-        downloadReport();
+        // downloadReport();
+        previousDownloads();
         
 
         }
@@ -145,12 +147,42 @@ function showPremium(){
         divarea.appendChild(leaderboard_button);
 }
 
-function downloadReport(){
-    const downloadButton = document.createElement('button');
-    downloadButton.innerHTML = "Download Report";
-    downloadButton.classList = "button button-download"
-    divarea.appendChild(downloadButton);
-}
+// function downloadReport(){
+//     const downloadButton = document.createElement('button');
+//     downloadButton.innerHTML = "Download Report";
+//     downloadButton.classList = "button button-download"
+//     downloadButton.addEventListener('click', async()=>{
+//         const token = localStorage.getItem('token');
+//         try{
+//         const result = await axios.get('http://localhost:6500/expense/download',{headers:{'Authorization':token}})
+//         if(result.status === 200){
+//             var a = document.createElement('a');
+//             a.href = result.data.fileUrl;
+//             a.download = "myexpense.csv";
+//             a.click();
+//         }
+//         else{
+//             throw new Error(response.data.message)
+//         }
+//     }
+//     catch(err){
+//         console.log(err)
+//     }
+//     })
+//     divarea.appendChild(downloadButton);
+// }
+async function previousDownloads(){
+    const previousButton = document.createElement('button');
+    previousButton.innerHTML = "Previous Downloads"
+    previousButton.classList = "button button-download "
+    previousButton.addEventListener('click',async() => {
+        window.location.href = "../previous-download/index.html"
+    })
+
+
+
+    divarea.appendChild(previousButton)
+}     
 function showReport(){
     const showReportButton = document.createElement('button');
     showReportButton.innerHTML = "Show Expense Report"
@@ -162,36 +194,6 @@ function showReport(){
     })
 }
 
-// function showLeaderboard(){
-//     const leaderboard_button = document.createElement('input');
-//         leaderboard_button.type = 'button';
-//         leaderboard_button.value = 'Show Leaderboard';
-//         leaderboard_button.classList = "button button-leaderboard"
-//         leaderboard_button.onclick = async () => {
-//         //     leaderboard_button.value = 'Close'
-//         //     leaderboard_button.onclick = () => {
-//         //         closeLeaderboard();
-//         //     }
-//         //     const token = localStorage.getItem('token');
-//         //     const userLeaderboardArray = await axios.get('http://localhost:6500/premium/showLeaderboard',{headers:{
-//         //         'Authorization':token
-//         //     }})
-//         //     console.log(userLeaderboardArray);
-//         //     var leaderboard = document.getElementById('leaderboard');
-//         //     leaderboard.innerHTML += '<h1> Leaderboard </h1>';
-//         //     userLeaderboardArray.data.forEach((userDetails) => {
-//         //         leaderboard.innerHTML += `<li> Name - ${userDetails.name} : Total Expense - ${userDetails.totalExpense}`
-//         //     })
-
-//         // }
-
-//         divarea.appendChild(leaderboard_button);
-// }
-
-
-
-
-// }
 async function showLeaderboard(){
     const leaderboardButton = document.getElementById('leaderboard-button');
             const token = localStorage.getItem('token');
@@ -202,7 +204,7 @@ async function showLeaderboard(){
             var leaderboard = document.getElementById('leaderboard');
             leaderboard.innerHTML += '<h1> Leaderboard </h1>';
             userLeaderboardArray.data.forEach((userDetails) => {
-                leaderboard.innerHTML += `<li> Name - ${userDetails.name} : Total Expense - ${userDetails.totalExpense}`
+                leaderboard.innerHTML += `<li> Name - ${userDetails.name} : Total Expense - ₹${userDetails.totalExpense}`
             })
             leaderboardButton.value = 'Close'
             leaderboardButton.onclick = () => {
@@ -215,9 +217,12 @@ async function showLeaderboard(){
             const leaderboardButton = document.getElementById('leaderboard-button');
             leaderboardButton.value = "Show Leaderboard"
             leaderboardButton.onclick = () => {
-                console.log('aaaaaaa')
                 showLeaderboard();
 
             }
 
         }
+
+
+
+   

@@ -51,5 +51,24 @@ yearTable.innerHTML += expenseRow
 
 })
 
+async function downloadReport(){
+    const token = localStorage.getItem('token');
+    try{
+    const result = await axios.get('http://localhost:6500/expense/download',{headers:{'Authorization':token}})
+    if(result.status === 200){
+        var a = document.createElement('a');
+        a.href = result.data.fileUrl;
+        a.download = "myexpense.csv";
+        a.click();
+    }
+    else{
+        throw new Error(response.data.message)
+    }
+}
+catch(err){
+    console.log(err)
+}
+}
+
 
 
