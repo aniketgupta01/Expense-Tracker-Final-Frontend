@@ -8,6 +8,8 @@ const divarea = document.getElementById('divarea');
 const premium = document.getElementById('premium')
 const userName = document.getElementById('user-name');
 const pagination = document.getElementById('pagination');
+const paginationValue = document.getElementById('rows');
+const paginationForm = document.getElementById('pagination-form')
 
 
 expenseForm.addEventListener('submit',submitExpense);
@@ -53,10 +55,13 @@ function showExpense(obj){
 }
 
 window.addEventListener('DOMContentLoaded',async() => {
+    const limit = localStorage.getItem('paginationValue')
+    paginationValue.value = limit
+    
      const page = 1;
     const token = localStorage.getItem('token')
     
-    let expenses = await axios.get(`http://localhost:6500/expense/get-expenses?page=${page}`,{headers:{"Authorization":token}});
+    let expenses = await axios.get(`http://localhost:6500/expense/get-expenses?page=${page}&&limit=${limit}`,{headers:{"Authorization":token}});
     showPagination(expenses.data);
     userName.innerHTML = expenses.data.userName;
     if(expenses.data.isPremium){
@@ -234,8 +239,9 @@ function showPagination({
 }      
 
 async function getProducts(page){
+    const limit = localStorage.getItem('paginationValue')
     const token = localStorage.getItem('token');
-    let expenses = await axios.get(`http://localhost:6500/expense/get-expenses?page=${page}`,{headers:{"Authorization":token}});
+    let expenses = await axios.get(`http://localhost:6500/expense/get-expenses?page=${page}&&limit=${limit}`,{headers:{"Authorization":token}});
     showPagination(expenses.data);
 
     for(let i=0;i<expenses.data.allExpenses.length;i++){
@@ -244,6 +250,9 @@ async function getProducts(page){
     
 }
 
+paginationForm.addEventListener('submit', () => {
+    localStorage.setItem('paginationValue',paginationValue.value)
+})
 
 
    
