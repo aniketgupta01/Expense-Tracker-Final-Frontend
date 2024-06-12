@@ -131,3 +131,11 @@ li{
         color: #ffffff;
     }
 }
+
+#pagination {
+    margin: auto;
+    padding-bottom: 20px;
+}
+#pagination button {
+    margin: 5px;
+}
